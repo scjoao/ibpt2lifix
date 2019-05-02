@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds">
+
+	<contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+        <resetJUL>true</resetJUL>
+    </contextListener>
+
+    <!-- To enable JMX Management -->
+    <jmxConfigurator/>
+    
+	<appender name="SERVER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	    <file>ibpt2lifix.log</file>
+	    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+	        <!-- rollover daily -->
+	        <FileNamePattern>ibpt2lifixBKP.%d{yyyy-MM-dd}.log.gz</FileNamePattern>
+	    </rollingPolicy>
+	    <encoder>
+	        <Pattern>[#|%-5level| date=%d{yyyy-MM-dd} time=%d{HH:mm:ss.SSS} thread=%thread classr=%logger{40} %msg |#]%n</Pattern>
+	    </encoder>
+	</appender>	
+	
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>[#|%-5level| date=%d{yyyy-MM-dd} time=%d{HH:mm:ss.SSS} thread=%thread class=%logger{40} %msg |#]%n</Pattern>
+		</layout>
+	</appender>
+	
+	<logger name="org.hibernate" level="OFF" />
+    <logger name="org.springframework" level="OFF" />
+    <logger name="org.springframework.transaction" level="OFF" />
+    <logger name="org.springframework.security" level="OFF" />
+    <logger name="org.springframework.web.servlet.mvc" level="INFO" />
+  	
+	<root level="TRACE">
+		<appender-ref ref="SERVER" />
+		<appender-ref ref="STDOUT" />
+	</root>
+</configuration>
